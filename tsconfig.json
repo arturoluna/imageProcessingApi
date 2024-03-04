@@ -1,0 +1,21 @@
+// tsconfig.json
+{
+    "compilerOptions": {
+      "target": "es5",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+      "lib": ["ES6"], 
+      "module": "commonjs",
+      "outDir": "./dist",
+      "strict": true,
+      "esModuleInterop": true,
+      "noImplicitAny": true,  
+      "forceConsistentCasingInFileNames": true, 
+      "skipLibCheck": true
+    },
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules"
+    ]
+  }
+  
