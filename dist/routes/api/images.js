@@ -44,16 +44,21 @@ var express_1 = __importDefault(require("express"));
 var sharp_1 = __importDefault(require("sharp"));
 var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
+var config_1 = require("../../config");
 var router = express_1.default.Router();
 var fullFolderPath = path_1.default.join(__dirname, './full');
+// const outputFolderPath = path.join(__dirname, './output');
 router.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var files, _i, files_1, file, imagePath, imageMetadata, err_1;
+    var files, width, height, _i, files_1, file, imagePath, resizedImageBuffer, outputPath, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 5, , 6]);
                 console.log('Endpoint /images is running'); // Log message when endpoint is hit
                 files = fs_1.default.readdirSync(fullFolderPath);
+                width = parseInt(req.query.width, 10) || 200;
+                height = parseInt(req.query.height, 10) || 200;
+                console.log(fullFolderPath);
                 _i = 0, files_1 = files;
                 _a.label = 1;
             case 1:
@@ -61,14 +66,14 @@ router.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 file = files_1[_i];
                 if (!(file.toLowerCase().endsWith('.jpg') || file.toLowerCase().endsWith('.png'))) return [3 /*break*/, 3];
                 imagePath = path_1.default.join(fullFolderPath, file);
-                return [4 /*yield*/, (0, sharp_1.default)(imagePath).metadata()];
+                return [4 /*yield*/, (0, sharp_1.default)(imagePath)
+                        .resize({ width: width, height: height })
+                        .toBuffer()];
             case 2:
-                imageMetadata = _a.sent();
-                // Log image information
-                console.log("Image Name: ".concat(file));
-                console.log("  Format: ".concat(imageMetadata.format));
-                console.log("  Width: ".concat(imageMetadata.width));
-                console.log("  Height: ".concat(imageMetadata.height));
+                resizedImageBuffer = _a.sent();
+                outputPath = path_1.default.join(config_1.outputFolderPath, file);
+                console.log(outputPath);
+                fs_1.default.writeFileSync(outputPath, resizedImageBuffer);
                 _a.label = 3;
             case 3:
                 _i++;

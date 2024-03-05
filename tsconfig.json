@@ -12,8 +12,12 @@
       "skipLibCheck": true
     },
     "include": [
-      "src/**/*.ts"
-    ],
+      "src/**/*.ts", // Include all TypeScript files in the src directory
+      "./src/**/*.ts", // Include all TypeScript files in the src directory
+      "./src/routes/api/full/**/*.ts", // Include all TypeScript files in the full directory
+      "./src/routes/api/output/**/*.ts", // Include all TypeScript files in the output directory
+      "tests/**/*.ts" // Include test files
+, "spec/imagesSpec.ts"    ],
     "exclude": [
       "node_modules"
     ]
